@@ -3,14 +3,11 @@ import image from '../assets/png-transparent-pokemon-ball-pokeball-area-wiki-tec
 import { FetchingOne } from '../API/PostService'
 
 const PokemoInfo = ({ item }) => {
-  console.log(item)
-
   const [stats, setStats] = useState([])
   const [pokemon, setPokemon] = useState({})
   const [types, setTypes] = useState([])
   useEffect(() => {
     if (item.url) {
-      FetchingOne(item.url).then((data) => console.log(data.data.types))
       FetchingOne(item.url).then((data) => setTypes(data.data.types))
 
       FetchingOne(item.url).then((data) => setPokemon(data.data))

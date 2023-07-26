@@ -14,7 +14,8 @@ export const FetchingOne = async (url) => {
   return response
 }
 export const FetchingOneType = async () => {
-  const response = await axios.get('https://pokeapi.co/api/v2/type/10/')
+  const response = await axios.get('https://pokeapi.co/api/v2/pokemon/1/')
+  //   console.log(response.data.types)
 
-  return response
+  return response.data.types
 }
