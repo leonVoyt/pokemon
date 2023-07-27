@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import image from '../assets/png-transparent-pokemon-ball-pokeball-area-wiki-technology-thumbnail.png'
 import { FetchingOne } from '../API/PostService'
+import { mapColors } from '../utils/colors'
 
 const PokemoInfo = ({ item }) => {
   const [stats, setStats] = useState([])
@@ -28,10 +29,15 @@ const PokemoInfo = ({ item }) => {
           {types.length !== 0 && 'Types'}
         </div>
         <div className="container_card-info--content-stats-value">
-          {types.map((type, index) => {
-            if (index !== types.length - 1) return type.type.name + ', '
-            else return type.type.name
-          })}
+          {types.map((type, index) => (
+            <span
+              style={{
+                backgroundColor: `rgba(${mapColors.get(type.type.name)})`,
+              }}
+            >
+              {type.type.name}
+            </span>
+          ))}
         </div>
       </div>
 

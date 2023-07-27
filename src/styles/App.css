@@ -28,6 +28,9 @@ body {
   height: 30px;
   background: rgb(207, 153, 37);
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .container__dropdown--button:hover {
   transform: scale(1.05);
@@ -74,12 +77,12 @@ body {
 }
 .container_left--button > button {
   width: 82%;
-  min-height: 26px;
+  min-height: 40px;
   cursor: pointer;
   background-color: blue;
   color: white;
   margin: 0 1rem;
-  border-radius: 15%;
+  border-radius: 10px;
 }
 .container_left--button > button:hover {
   background-color: black;
@@ -105,7 +108,7 @@ body {
   border: 1px solid black;
   display: flex;
   flex-direction: column;
-
+  padding-bottom: 1rem;
   max-width: 35vw;
   align-items: center;
   position: relative;
@@ -150,6 +153,16 @@ body {
   margin-top: 1rem;
 
   text-align: center;
+  display: flex;
+  justify-content: center;
+}
+.container_card-type--element {
+  margin-inline: 0.2rem;
+  min-width: fit-content;
+  max-width: 33%;
+  background-color: rgba(255, 0, 0, 0.4);
+  border-radius: 5px;
+  padding: 0.2rem 0.6rem;
 }
 
 .container_card-info--content div {
@@ -165,7 +178,7 @@ body {
 .container_card-info--content > div > div {
   display: flex;
   justify-content: center;
-  font-size: calc(8px + 3 * (100vw / 1280));
+  font-size: calc(8px + 8 * (100vw / 1280));
 }
 .container_card-info--content-stats-type {
   height: 100%;
@@ -177,7 +190,17 @@ body {
   min-height: 100%;
   padding-block: 0.5rem;
   font-size: calc(6px + 3 * (100vw / 1280));
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
+.container_card-info--content-stats-value > span {
+  margin-bottom: 0.1rem;
+  width: fit-content;
+  padding: 0.05rem;
+  border-radius: 5px;
+}
+
 @media (max-width: 820px) {
   .container_card-info {
     justify-content: center;

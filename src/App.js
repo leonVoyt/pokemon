@@ -127,7 +127,12 @@ const App = () => {
         <div className="container_left">
           <div className="container_card-list">
             {pArray.map((pokemon, index) => (
-              <PokemonCard item={pokemon} key={index} set={setCurr} />
+              <PokemonCard
+                item={pokemon}
+                key={index}
+                set={setCurr}
+                allType={allTypes}
+              />
             ))}
           </div>
           <div className="container_left--button">
