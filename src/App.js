@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './styles/App.css'
-import { Fetching, FetchingOne } from './API/PostService'
+import { Fetching, FetchingOne, FetchingOneType } from './API/PostService'
 import PokemonCard from './components/PokemonCard'
 import PokemoInfo from './components/PokemoInfo'
 import { useScroll } from './hooks/useScroll'
@@ -17,6 +17,7 @@ const App = () => {
     Fetching()
       .then((data) => setPArray(data))
       .then(() => setArr(true))
+    FetchingOneType()
 
     function handleClick() {
       setButton(false)
