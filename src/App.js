@@ -1,32 +1,31 @@
 import React, { useEffect, useState } from 'react'
 import './styles/App.css'
-import { Fetching, FetchingOne, FetchingOneType } from './API/PostService'
-import image from './assets/png-transparent-pokemon-ball-pokeball-area-wiki-technology-thumbnail.png'
+import { Fetching, FetchingOne } from './API/PostService'
 import PokemonCard from './components/PokemonCard'
 import PokemoInfo from './components/PokemoInfo'
-import { MyContext } from './context/MyContext'
+import { useScroll } from './hooks/useScroll'
+
 const App = () => {
   const [pArray, setPArray] = useState([])
   const [curr, setCurr] = useState({})
   const [visible, setVisible] = useState(false)
   const [arr, setArr] = useState(false)
-  const [types, setTypes] = useState([])
+  const [allTypes, setAllTypes] = useState([])
+  const [button, setButton] = useState(false)
+  const [allPokemon, setAllPokemon] = useState([])
   useEffect(() => {
     Fetching()
       .then((data) => setPArray(data))
       .then(() => setArr(true))
-    // Fetching()
-    //   .then((data) => {
-    //     let res = []
-    //     data.map((el) => {
-    //       FetchingOne(el.url)
-    //         .then((data) => {
-    //           res.push(data.data.types)
-    //         })
-    //         .then(setTypes(res))
-    //     })
-    //   })
-    //   .then((data) => console.log(data))
+
+    function handleClick() {
+      setButton(false)
+    }
+    window.addEventListener('click', handleClick)
+
+    return () => {
+      window.removeEventListener('click', handleClick)
+    }
   }, [])
 
   useEffect(() => {
@@ -40,19 +39,20 @@ const App = () => {
               if (data.data.types.length !== 0) {
                 array.push({ type: data.data.types, url: el.url })
               }
-              // Check if all fetches are done before resolving the promise
               if (array.length === pArray.length + 1) {
                 resolve(array.filter((el) => el.url !== ''))
               }
             })
             .catch((error) => {
-              reject(error) // Handle the rejection in case of an error
+              reject(error)
             })
         })
       })
-
+      if (pArray.length === 0) {
+      }
       p.then((result) => {
         let copy = [...pArray]
+        const set = new Set([])
         for (let i = 0; i < result.length; i++) {
           for (let k = 0; k < result.length; k++) {
             if (result[i].url === copy[k].url) {
@@ -60,7 +60,15 @@ const App = () => {
             }
           }
         }
-
+        for (let i = 0; i < result.length; i++) {
+          for (let k = 0; k < result[i].type.length; k++) {
+            set.add(result[i].type[k].type.name)
+          }
+        }
+        setAllPokemon(copy)
+        if (allTypes.length === 0) {
+          setAllTypes([...set])
+        }
         setPArray(copy)
       }).catch((error) => {
         console.error(error)
@@ -68,25 +76,51 @@ const App = () => {
     }
   }, [arr])
 
-  const handleFуе = (arra) => {
-    let filt = pArray.filter((item) =>
-      item.type.length === 1
-        ? item.type[0].type.name === 'poison'
-        : item.type[1].type.name === 'poison'
-    )
-    console.log(filt)
+  const handleFilter = (pokemonType) => {
+    let filt = allPokemon.filter((item) => {
+      for (let i = 0; i < item.type.length; i++) {
+        if (item.type[i].type.name === pokemonType) {
+          return true
+        }
+      }
+      return false
+    })
+
     setPArray(filt)
   }
-
-  const handleFilter = () => {}
-
+  const scroll = () => {
+    window.scrollTo(0, 0)
+  }
   return (
     <div className="container">
       <div className="container__logo">
         <div className="container__logo-logo">
           <h1>Pokedex</h1>
         </div>
-        <button onClick={() => handleFуе()}>Filter</button>
+        <div
+          className="container__dropdown--button"
+          onClick={(e) => {
+            e.stopPropagation()
+            setButton(!button)
+          }}
+        >
+          filter
+        </div>
+        <div className={`container__dropdown ${button ? 'active' : ''}`}>
+          {allTypes.length !== 0 &&
+            allTypes.map((type, index) => (
+              <p
+                onClick={async () => {
+                  await setPArray(allPokemon)
+                  await handleFilter(type)
+                }}
+                key={index}
+              >
+                {type}
+              </p>
+            ))}
+          <p onClick={() => setPArray(allPokemon)}>all</p>
+        </div>
       </div>
 
       <div className="container__content">
@@ -101,18 +135,21 @@ const App = () => {
               onClick={() => {
                 setVisible(!visible)
                 setCurr({})
+                scroll()
               }}
             >
               Load More
             </button>
-            <button>Load More Pokemon</button>
           </div>
         </div>
         <div className="container_card-info">
           {visible ? (
             <PokemoInfo item={curr} />
           ) : (
-            'Click load more for fatch pokemon detail`s'
+            <p>
+              Click <span style={{ color: 'blue' }}>load more </span>
+              for fatch pokemon detail`s
+            </p>
           )}
         </div>
       </div>

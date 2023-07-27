@@ -1,8 +1,8 @@
 import axios from 'axios'
 
-export const Fetching = async () => {
+export const Fetching = async (limit = 12) => {
   const response = await axios.get(
-    'https://pokeapi.co/api/v2/pokemon/?limit=12'
+    `https://pokeapi.co/api/v2/pokemon/?limit=${limit}`
   )
 
   return response.data.results
