@@ -7,19 +7,22 @@ const PokemoInfo = ({ item }) => {
   const [stats, setStats] = useState([])
   const [pokemon, setPokemon] = useState({})
   const [types, setTypes] = useState([])
+  const [img, setImg] = useState('')
   useEffect(() => {
     if (item.url) {
-      FetchingOne(item.url).then((data) => setTypes(data.data.types))
-
-      FetchingOne(item.url).then((data) => setPokemon(data.data))
-
-      FetchingOne(item.url).then((data) => setStats(data.data.stats))
+      FetchingOne(item.url).then((data) => {
+        setTypes(data.data.types)
+        setPokemon(data.data)
+        setStats(data.data.stats)
+        setImg(data.data.sprites.front_default)
+        // console.log()
+      })
     }
   }, [item])
 
   return item.name ? (
     <div className="container_card-info--content">
-      <img src={image} alt="" />
+      <img src={img} alt="" />
       <h1 className="container_card-info--content-name">
         {item.name !== '' ? item.name : 'chose pokemon'}
       </h1>

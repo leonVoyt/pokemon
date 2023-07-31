@@ -109,16 +109,17 @@ body {
   display: flex;
   flex-direction: column;
   padding-bottom: 1rem;
-  max-width: 35vw;
   align-items: center;
   position: relative;
+  min-width: fit-content;
+  padding: 1rem;
 }
 .container_card-info--content > h1 {
   font-size: calc(1rem + 24 * (100vw / 1280));
 }
 .container_card-info--content img {
   width: 100%;
-  height: 50%;
+  height: 100%;
 }
 
 .container_card {
@@ -141,7 +142,7 @@ body {
 }
 .container_card img {
   width: 100%;
-  height: 40%;
+  height: 50%;
   border: 1px solid rgba(0, 0, 0, 0.5);
 }
 
@@ -166,7 +167,7 @@ body {
 }
 
 .container_card-info--content div {
-  width: 90%;
+  width: 110%;
   height: fit-content;
   text-align: center;
   display: flex;
@@ -188,6 +189,7 @@ body {
 .container_card-info--content-stats-value {
   border-left: 1px solid black;
   min-height: 100%;
+  min-width: fit-content;
   padding-block: 0.5rem;
   font-size: calc(6px + 3 * (100vw / 1280));
   flex-direction: column;
